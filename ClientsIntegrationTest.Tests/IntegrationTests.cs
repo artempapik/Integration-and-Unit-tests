@@ -35,7 +35,6 @@ using System;
 //changed first project name to avoid nested namespaces
 //read http response status codes & change some responses in controller
 //check if class field is private by default
-//verify unit tests crud is really working
 //install ReSharper
 //code refactoring using ReSharper
 
