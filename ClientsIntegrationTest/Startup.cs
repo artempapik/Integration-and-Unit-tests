@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ClientsTests.Repositories;
 using Microsoft.Extensions.Configuration;
-using ClientsTests.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using ClientsTests.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using ClientsTests.Models;
 
 namespace ClientsTests
 {

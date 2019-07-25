@@ -1,7 +1,7 @@
-﻿using ClientsTests.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ClientsTests.Models;
 
 namespace ClientsTests.Repositories
 {

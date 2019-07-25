@@ -14,19 +14,38 @@ namespace ClientUnitTest.Tests
 {
 	public class UnitTests
 	{
+		private Client Client { get; } = new Client
+		{
+			Id = 1,
+			Name = "Igor"
+		};
+
+		private IEnumerable<Client> CreateClientsMock() => new List<Client>
+		{
+			Client,
+			new Client
+			{
+				Id = 2,
+				Name = "Igor"
+			},
+			new Client
+			{
+				Id = 3,
+				Name = "Nick"
+			}
+		};
+
 		[Test]
 		public async Task CreateNullClientAsync_CreatingClient_ClientIsNotCreated()
 		{
 			var mock = new Mock<IClientRepository>();
 			var controller = new ClientsController(mock.Object);
-
-			Client emptyClient = null;
-			var result = await controller.Post(emptyClient);
+			var result = await controller.Post(null);
 
 			result
 				.GetType()
 				.Should()
-				.Be(typeof(NotFoundResult));
+				.Be(typeof(NoContentResult));
 		}
 
 		[Test]
@@ -41,7 +60,7 @@ namespace ClientUnitTest.Tests
 			result
 				.GetType()
 				.Should()
-				.Be(typeof(NotFoundResult));
+				.Be(typeof(NoContentResult));
 		}
 
 		[Test]
@@ -50,8 +69,10 @@ namespace ClientUnitTest.Tests
 			var mock = new Mock<IClientRepository>();
 			var controller = new ClientsController(mock.Object);
 
-			var validCLient = new Client { Id = 1, Name = Utils.CreateNewClientName() };
-			var result = await controller.Post(validCLient);
+			mock.Setup(n => n.GetClients()).Returns(Task.FromResult(CreateClientsMock().AsEnumerable()));
+
+			var validClient = new Client { Id = 1, Name = Utils.CreateNewClientName() };
+			var result = await controller.Post(validClient);
 
 			result
 				.GetType()
@@ -59,43 +80,19 @@ namespace ClientUnitTest.Tests
 				.Be(typeof(OkObjectResult));
 		}
 
-		List<Client> CreateClientsMock() => new List<Client>
-		{
-			new Client
-			{
-				Id = 1,
-				Name = "Sweet Pupsik"
-			},
-			new Client
-			{
-				Id = 2,
-				Name = "Igor"
-			},
-			new Client
-			{
-				Id = 3,
-				Name = "Kolya"
-			}
-		};
-
 		[Test]
 		public async Task PutNullClientAsync_PuttingClient_ClientIsNotPut()
 		{
 			var mock = new Mock<IClientRepository>();
 			var controller = new ClientsController(mock.Object);
 
-			var clients = CreateClientsMock();
-
-			mock.Setup(n => n.GetClients()).Returns(Task.FromResult(clients.AsEnumerable()));
-			mock.Setup(n => n.GetClient(clients[0].Id)).Returns(Task.FromResult(clients[0]));
-
-			Client emptyClient = null;
-			var result = await controller.Put(emptyClient);
+			mock.Setup(n => n.GetClient(Client.Id)).Returns(Task.FromResult(Client));
+			var result = await controller.Put(null);
 
 			result
 				.GetType()
 				.Should()
-				.Be(typeof(NotFoundResult));
+				.Be(typeof(NoContentResult));
 		}
 
 		[Test]
@@ -104,30 +101,24 @@ namespace ClientUnitTest.Tests
 			var mock = new Mock<IClientRepository>();
 			var controller = new ClientsController(mock.Object);
 
-			var clients = CreateClientsMock();
+			mock.Setup(n => n.GetClient(Client.Id)).Returns(Task.FromResult(Client));
 
-			mock.Setup(n => n.GetClients()).Returns(Task.FromResult(clients.AsEnumerable()));
-			mock.Setup(n => n.GetClient(clients[0].Id)).Returns(Task.FromResult(clients[0]));
-
-			var clientEmptyName = new Client { Id = clients[0].Id, Name = null };
+			var clientEmptyName = new Client { Id = Client.Id, Name = null };
 			var result = await controller.Put(clientEmptyName);
 
 			result
 				.GetType()
 				.Should()
-				.Be(typeof(NotFoundResult));
+				.Be(typeof(NoContentResult));
 		}
 
 		[Test]
-		public async Task PutClientWithUnexistingIdAsync_PuttingClient_ClientIsNotPut()
+		public async Task PutClientWithNonExistingIdAsync_PuttingClient_ClientIsNotPut()
 		{
 			var mock = new Mock<IClientRepository>();
 			var controller = new ClientsController(mock.Object);
 
-			var clients = CreateClientsMock();
-
-			mock.Setup(n => n.GetClients()).Returns(Task.FromResult(clients.AsEnumerable()));
-			mock.Setup(n => n.GetClient(clients[0].Id)).Returns(Task.FromResult(clients[0]));
+			mock.Setup(n => n.GetClient(Client.Id)).Returns(Task.FromResult(Client));
 
 			var clientWithBigId = new Client { Id = int.MaxValue, Name = Utils.CreateNewClientName() };
 			var result = await controller.Put(clientWithBigId);
@@ -144,12 +135,10 @@ namespace ClientUnitTest.Tests
 			var mock = new Mock<IClientRepository>();
 			var controller = new ClientsController(mock.Object);
 
-			var clients = CreateClientsMock();
+			mock.Setup(n => n.GetClient(Client.Id)).Returns(Task.FromResult(Client));
 
-			mock.Setup(n => n.GetClients()).Returns(Task.FromResult(clients.AsEnumerable()));
-			mock.Setup(n => n.GetClient(clients[0].Id)).Returns(Task.FromResult(clients[0]));
-
-			var okClient = new Client { Id = clients[0].Id, Name = Utils.CreateNewClientName() };
+			string newName = Utils.CreateNewClientName();
+			var okClient = new Client { Id = Client.Id, Name = newName };
 			var result = await controller.Put(okClient);
 
 			result
@@ -159,15 +148,12 @@ namespace ClientUnitTest.Tests
 		}
 
 		[Test]
-		public async Task DeleteClientWithUnexistingIdAsync_DelettingClient_ClientIsNotDeleted()
+		public async Task DeleteClientWithNonExistingIdAsync_DeletingClient_ClientIsNotDeleted()
 		{
 			var mock = new Mock<IClientRepository>();
 			var controller = new ClientsController(mock.Object);
 
-			var clients = CreateClientsMock();
-
-			mock.Setup(n => n.GetClients()).Returns(Task.FromResult(clients.AsEnumerable()));
-			mock.Setup(n => n.GetClient(clients[0].Id)).Returns(Task.FromResult(clients[0]));
+			mock.Setup(n => n.GetClient(Client.Id)).Returns(Task.FromResult(Client));
 
 			int idNotExist = int.MaxValue;
 			var result = await controller.Delete(idNotExist);
@@ -179,17 +165,15 @@ namespace ClientUnitTest.Tests
 		}
 
 		[Test]
-		public async Task DeleteValidClientAsync_DelettingClient_ClientIsDeleted()
+		public async Task DeleteValidClientAsync_DeletingClient_ClientIsDeleted()
 		{
 			var mock = new Mock<IClientRepository>();
 			var controller = new ClientsController(mock.Object);
+		
+			mock.Setup(n => n.GetClients()).Returns(Task.FromResult(CreateClientsMock().AsEnumerable()));
+			mock.Setup(n => n.GetClient(Client.Id)).Returns(Task.FromResult(Client));
 
-			var clients = CreateClientsMock();
-
-			mock.Setup(n => n.GetClients()).Returns(Task.FromResult(clients.AsEnumerable()));
-			mock.Setup(n => n.GetClient(clients[0].Id)).Returns(Task.FromResult(clients[0]));
-
-			int idExist = clients[0].Id;
+			int idExist = Client.Id;
 			var result = await controller.Delete(idExist);
 
 			result

@@ -1,24 +1,24 @@
-﻿using ClientsTests.Repositories;
-using ClientsTests.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ClientsTests.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using ClientsTests.Models;
 
 namespace ClientsTests.Controllers
 {
 	[Route("api/clients")]
 	public class ClientsController : ControllerBase
 	{
-		IClientRepository Repository { get; }
+		private IClientRepository Repository { get; }
 
 		public ClientsController(IClientRepository repository) => Repository = repository;
 
 		[HttpPost]
 		public async Task<IActionResult> Post([FromBody]Client client)
 		{
-			if (client == null || client.Name == null)
+			if (client?.Name == null)
 			{
-				return NotFound();
+				return NoContent();
 			}
 
 			await Repository.AddClient(client);
@@ -35,7 +35,7 @@ namespace ClientsTests.Controllers
 
 			if (client == null)
 			{
-				return NotFound();
+				return NoContent();
 			}
 
 			return Ok(client);
@@ -44,9 +44,9 @@ namespace ClientsTests.Controllers
 		[HttpPut]
 		public async Task<IActionResult> Put([FromBody]Client newClient)
 		{
-			if (newClient == null || newClient.Name == null)
+			if (newClient?.Name == null)
 			{
-				return NotFound();
+				return NoContent();
 			}
 
 			Client oldClient = await Repository.GetClient(newClient.Id);

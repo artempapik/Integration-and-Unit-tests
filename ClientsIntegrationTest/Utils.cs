@@ -1,11 +1,14 @@
 ﻿using System.Text;
+using System.Linq;
 using System;
 
 namespace ClientsTests
 {
 	public static class Utils
 	{
-		static string Alphabet { get; } = "abcdefgijklmnopqrstuvwxyz";
+		private static string Alphabet { get; } = $@"{Enumerable
+			.Range('A', 'Z' - 'A' + 1)
+			.Select((c => (char) c))}";
 
 		public static string CreateNewClientName()
 		{

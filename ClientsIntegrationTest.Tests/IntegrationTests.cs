@@ -31,13 +31,20 @@ using System;
 //there should be some assert in the end of the test method
 //change string concatenation to StringBuilder in new client name creating
 //remove any hardcoded values in tests
-//check that all tests is succesfully passed
+//check that all tests is successfully passed
 //changed first project name to avoid nested namespaces
+//read http response status codes & change some responses in controller
+//check if class field is private by default
+//verify unit tests crud is really working
+//install ReSharper
+//code refactoring using ReSharper
 
 namespace ClientsIntegrationTest.Tests
 {
 	public class IntegrationTests
 	{
+		private static string ErrorMessage { get; } = "clients database is empty";
+
 		[SetUp]
 		public async Task Init()
 		{
@@ -45,7 +52,7 @@ namespace ClientsIntegrationTest.Tests
 				.AddJsonFile("appsettings.json")
 				.Build();
 
-			URL = configuration["IntegrationTest:URL"];
+			Url = configuration["IntegrationTest:URL"];
 
 			//clearing the database
 			var clients = await GetClientsAsync();
@@ -56,7 +63,7 @@ namespace ClientsIntegrationTest.Tests
 
 				if (client != null)
 				{
-					await Client.DeleteAsync($"{URL}/{client.Id}");
+					await Client.DeleteAsync($"{Url}/{client.Id}");
 				}
 
 				clients.RemoveFirst();
@@ -67,17 +74,17 @@ namespace ClientsIntegrationTest.Tests
 			{
 				var jsonClient = JsonConvert.SerializeObject(new Client { Name = Utils.CreateNewClientName() });
 				var stringContent = new StringContent(jsonClient, Encoding.UTF8, "application/json");
-				await Client.PostAsync(URL, stringContent);
+				await Client.PostAsync(Url, stringContent);
 			}
 		}
 
-		static string URL { get; set; }
+		private static string Url { get; set; }
 
-		static HttpClient Client { get; } = new HttpClient();
+		private static HttpClient Client { get; } = new HttpClient();
 
-		async Task<LinkedList<Client>> GetClientsAsync()
+		private static async Task<LinkedList<Client>> GetClientsAsync()
 		{
-			var response = await Client.GetAsync(URL);
+			var response = await Client.GetAsync(Url);
 			var content = await response.Content.ReadAsStringAsync();
 			return JsonConvert.DeserializeObject<LinkedList<Client>>(content);
 		}
@@ -90,7 +97,7 @@ namespace ClientsIntegrationTest.Tests
 			//generate post message
 			var jsonClient = JsonConvert.SerializeObject(new Client { Name = Utils.CreateNewClientName() });
 			var stringContent = new StringContent(jsonClient, Encoding.UTF8, "application/json");
-			await Client.PostAsync(URL, stringContent);
+			await Client.PostAsync(Url, stringContent);
 
 			var newClients = await GetClientsAsync();
 
@@ -107,7 +114,7 @@ namespace ClientsIntegrationTest.Tests
 
 			if (oldClient == null)
 			{
-				throw new ArgumentNullException("clients database is empty");
+				throw new ArgumentNullException(ErrorMessage);
 			}
 
 			int oldClientId = oldClient.Id;
@@ -115,10 +122,10 @@ namespace ClientsIntegrationTest.Tests
 
 			var jsonClient = JsonConvert.SerializeObject(new Client { Id = oldClientId, Name = newName });
 			var stringContent = new StringContent(jsonClient, Encoding.UTF8, "application/json");
-			await Client.PutAsync(URL, stringContent);
+			await Client.PutAsync(Url, stringContent);
 
 			//get client from id
-			var response = await Client.GetAsync($"{URL}/{oldClientId}");
+			var response = await Client.GetAsync($"{Url}/{oldClientId}");
 			var content = await response.Content.ReadAsStringAsync();
 			Client newClient = JsonConvert.DeserializeObject<Client>(content);
 
@@ -135,10 +142,10 @@ namespace ClientsIntegrationTest.Tests
 
 			if (client == null)
 			{
-				throw new ArgumentNullException("clients database is empty");
+				throw new ArgumentNullException(ErrorMessage);
 			}
 
-			await Client.DeleteAsync($"{URL}/{client.Id}");
+			await Client.DeleteAsync($"{Url}/{client.Id}");
 			var newClients = await GetClientsAsync();
 
 			//check if database contains client after deleting
@@ -146,7 +153,7 @@ namespace ClientsIntegrationTest.Tests
 
 			clientExist
 				.Should()
-				.Be(false);
+				.BeFalse();
 		}
 	}
 }
