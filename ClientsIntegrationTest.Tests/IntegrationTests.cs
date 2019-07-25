@@ -37,6 +37,7 @@ using System;
 //check if class field is private by default
 //install ReSharper
 //code refactoring using ReSharper
+//read about React
 
 namespace ClientsIntegrationTest.Tests
 {
@@ -91,18 +92,20 @@ namespace ClientsIntegrationTest.Tests
 		[Test]
 		public async Task ClientGetAsync_GettingClients_ClientCreated()
 		{
-			var oldClients = await GetClientsAsync();
+			string newName = Utils.CreateNewClientName();
 
 			//generate post message
-			var jsonClient = JsonConvert.SerializeObject(new Client { Name = Utils.CreateNewClientName() });
+			var jsonClient = JsonConvert.SerializeObject(new Client { Name = newName });
 			var stringContent = new StringContent(jsonClient, Encoding.UTF8, "application/json");
 			await Client.PostAsync(Url, stringContent);
 
 			var newClients = await GetClientsAsync();
 
-			newClients.Count
+			newClients
+				.Last()
+				.Name
 				.Should()
-				.Be(oldClients.Count + 1);
+				.Be(newName);
 		}
 
 		[Test]

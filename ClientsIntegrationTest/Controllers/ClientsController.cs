@@ -18,7 +18,7 @@ namespace ClientsTests.Controllers
 		{
 			if (client?.Name == null)
 			{
-				return NoContent();
+				return BadRequest();
 			}
 
 			await Repository.AddClient(client);
@@ -35,7 +35,7 @@ namespace ClientsTests.Controllers
 
 			if (client == null)
 			{
-				return NoContent();
+				return BadRequest();
 			}
 
 			return Ok(client);
@@ -46,7 +46,7 @@ namespace ClientsTests.Controllers
 		{
 			if (newClient?.Name == null)
 			{
-				return NoContent();
+				return BadRequest();
 			}
 
 			Client oldClient = await Repository.GetClient(newClient.Id);

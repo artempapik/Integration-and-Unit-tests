@@ -45,7 +45,7 @@ namespace ClientUnitTest.Tests
 			result
 				.GetType()
 				.Should()
-				.Be(typeof(NoContentResult));
+				.Be(typeof(BadRequestResult));
 		}
 
 		[Test]
@@ -60,7 +60,7 @@ namespace ClientUnitTest.Tests
 			result
 				.GetType()
 				.Should()
-				.Be(typeof(NoContentResult));
+				.Be(typeof(BadRequestResult));
 		}
 
 		[Test]
@@ -92,7 +92,7 @@ namespace ClientUnitTest.Tests
 			result
 				.GetType()
 				.Should()
-				.Be(typeof(NoContentResult));
+				.Be(typeof(BadRequestResult));
 		}
 
 		[Test]
@@ -109,7 +109,7 @@ namespace ClientUnitTest.Tests
 			result
 				.GetType()
 				.Should()
-				.Be(typeof(NoContentResult));
+				.Be(typeof(BadRequestResult));
 		}
 
 		[Test]
