@@ -10,7 +10,7 @@ using ClientsTests;
 using System.Linq;
 using Moq;
 
-namespace ClientUnitTest.Tests
+namespace ClientsUnitTest.Tests
 {
 	public class UnitTests
 	{

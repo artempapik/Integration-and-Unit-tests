@@ -6,9 +6,7 @@ namespace ClientsTests
 {
 	public static class Utils
 	{
-		private static string Alphabet { get; } = $@"{Enumerable
-			.Range('A', 'Z' - 'A' + 1)
-			.Select((c => (char) c))}";
+		private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 		public static string CreateNewClientName()
 		{
@@ -17,7 +15,7 @@ namespace ClientsTests
 
 			for (int i = 0; i < 10; i++)
 			{
-				newName.Append($"{Alphabet[random.Next(0, 24)]}");
+				newName.Append($"{Alphabet[random.Next(0, Alphabet.Length - 1)]}");
 			}
 
 			return $"{newName}";
