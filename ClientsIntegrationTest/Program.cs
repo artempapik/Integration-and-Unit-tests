@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
 
-namespace ClientsIntegrationTest
+namespace ClientsTests
 {
 	public class Program
 	{

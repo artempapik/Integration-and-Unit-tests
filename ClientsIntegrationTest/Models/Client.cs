@@ -1,4 +1,4 @@
-﻿namespace ClientsIntegrationTest.Models
+﻿namespace ClientsTests.Models
 {
 	public class Client
 	{

@@ -1,10 +1,10 @@
-﻿using ClientsIntegrationTest.Repositories;
-using ClientsIntegrationTest.Models;
+﻿using ClientsTests.Repositories;
+using ClientsTests.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace ClientsIntegrationTest.Controllers
+namespace ClientsTests.Controllers
 {
 	[Route("api/clients")]
 	public class ClientsController : ControllerBase

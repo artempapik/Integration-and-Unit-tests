@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ClientsIntegrationTest.Repositories;
+using ClientsTests.Repositories;
 using Microsoft.Extensions.Configuration;
-using ClientsIntegrationTest.Models;
+using ClientsTests.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ClientsIntegrationTest
+namespace ClientsTests
 {
 	public class Startup
 	{

@@ -1,8 +1,8 @@
-﻿using ClientsIntegrationTest.Models;
+﻿using ClientsTests.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ClientsIntegrationTest.Repositories
+namespace ClientsTests.Repositories
 {
 	public interface IClientRepository
 	{

@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientsIntegrationTest", "ClientsIntegrationTest\ClientsIntegrationTest.csproj", "{2E4B9E41-AC91-40FD-AF72-B35D69DC04EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientsTests", "ClientsIntegrationTest\ClientsTests.csproj", "{2E4B9E41-AC91-40FD-AF72-B35D69DC04EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientsIntegrationTest.Tests", "ClientsIntegrationTest.Tests\ClientsIntegrationTest.Tests.csproj", "{C70CB146-323D-4841-B19B-931D066814BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientsIntegrationTest.Tests", "ClientsIntegrationTest.Tests\ClientsIntegrationTest.Tests.csproj", "{C70CB146-323D-4841-B19B-931D066814BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientsUnitTest.Tests", "ClientsUnitTest.Tests\ClientsUnitTest.Tests.csproj", "{66D83472-5CDB-40D3-AAB1-1C8F2C585B57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C70CB146-323D-4841-B19B-931D066814BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C70CB146-323D-4841-B19B-931D066814BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C70CB146-323D-4841-B19B-931D066814BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D83472-5CDB-40D3-AAB1-1C8F2C585B57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D83472-5CDB-40D3-AAB1-1C8F2C585B57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D83472-5CDB-40D3-AAB1-1C8F2C585B57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D83472-5CDB-40D3-AAB1-1C8F2C585B57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

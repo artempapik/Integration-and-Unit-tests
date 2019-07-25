@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace ClientsIntegrationTest.Models
+namespace ClientsTests.Models
 {
 	public class ApplicationContext : DbContext
 	{

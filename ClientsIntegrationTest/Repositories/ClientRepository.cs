@@ -1,9 +1,9 @@
-﻿using ClientsIntegrationTest.Models;
+﻿using ClientsTests.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ClientsIntegrationTest.Repositories
+namespace ClientsTests.Repositories
 {
 	public class ClientRepository : IClientRepository
 	{
