@@ -1,6 +1,6 @@
-﻿using ClientsTests.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ClientsTests.Models;
 
 namespace ClientsTests.Repositories
 {

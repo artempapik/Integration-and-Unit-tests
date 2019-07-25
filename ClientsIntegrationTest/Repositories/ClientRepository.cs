@@ -7,7 +7,7 @@ namespace ClientsTests.Repositories
 {
 	public class ClientRepository : IClientRepository
 	{
-		ApplicationContext Context { get; }
+		private ApplicationContext Context { get; }
 
 		public ClientRepository(ApplicationContext context) => Context = context;
 
